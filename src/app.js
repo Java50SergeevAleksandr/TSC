@@ -22,9 +22,7 @@ function unshiftRound(str, shift) {
     //source letter 'c' will be 'a' if "shift" == 2
     //source letter 'b' will be 'z' if shift ==2
     //example: unshiftRound("eefb!", 4) => ("aabx!")
-    return Array.from(str).map(val => {
-        return checkLetter(val) ? shiftLetter(val, -shift) : val;
-    }).join('');
+    return shiftRound(str, -shift);
 }
 function checkLetter(letter) {
     return (FIRST_SYMBOL <= letter.charCodeAt(0) && letter.charCodeAt(0) <= LAST_SYMBOL) ? true : false;

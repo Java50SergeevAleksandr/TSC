@@ -30,7 +30,7 @@ export class CipherImpl implements Cipher {
     }
     private shiftFromMapper(str: string, mapper: Function, shift: number) {
         return Array.from(str).map(symb => {
-            return this.checkLetter(symb) ? mapper(symb, shift) : symb;
+            return this.checkLetter(symb) ? mapper(symb, Math.abs(shift)) : symb;
         }).join('');
     }
     private checkLetter(letter: string): boolean {

@@ -11,10 +11,10 @@ function shiftRound(str: string, shift: number): string {
     //source letter 'a' will be 'c' if "shift" == 2
     //source letter 'z' will be 'b' if shift ==2
     //example: shiftRound("aabx!", 4) => ("eefb!")
-    return Array.from(str).map(val => {
-        return checkLetter(val) ? shiftLetter(val, shift) : val
-    }).join('');
+    return cipherDecipher(str, shift);
 }
+
+
 
 function unshiftRound(str: string, shift: number): string {
     //subtracts "shift" from ASCII codes of lower case letters
@@ -23,9 +23,14 @@ function unshiftRound(str: string, shift: number): string {
     //source letter 'c' will be 'a' if "shift" == 2
     //source letter 'b' will be 'z' if shift ==2
     //example: unshiftRound("eefb!", 4) => ("aabx!")
-    return shiftRound(str, -shift);
+    return cipherDecipher(str, -shift);
 }
 
+function cipherDecipher(str: string, shift: number): string {
+    return Array.from(str).map(val => {
+        return checkLetter(val) ? shiftLetter(val, shift) : val;
+    }).join('');
+}
 
 function checkLetter(letter: string): boolean {
     return (FIRST_SYMBOL <= letter.charCodeAt(0) && letter.charCodeAt(0) <= LAST_SYMBOL) ? true : false;

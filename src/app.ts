@@ -8,4 +8,3 @@ const leftShift = new CipherLeftShift(1);
 const rightShift = new CipherRightShift(1);
 displayCipherDecipher(leftShift, "abcz!");
 displayCipherDecipher(rightShift, "abcz!");
-

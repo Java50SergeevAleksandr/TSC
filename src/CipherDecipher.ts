@@ -5,23 +5,28 @@ const LAST_SYMBOL: number = "~".charCodeAt(0);
 const RANGE: number = LAST_SYMBOL - FIRST_SYMBOL + 1;
 
 export class CipherImpl implements Cipher {
-
-    protected constructor(private shift: number, private shiftDirection: "left" | "right") { }
+    declare protected mapperCipher: Function;
+    declare protected mapperDecipher: Function;
+    protected constructor(private shift: number) {
+        this.getMapper();
+    }
     cipher(plainText: string): string {
-        const mapperCipher: Function = this.shiftDirection == "left" ? this.getFunctionLeftShift() : this.getFunctionRightShift();
-        return this.shiftFromMapper(plainText, mapperCipher, this.shift);
+        return this.shiftFromMapper(plainText, this.mapperCipher, this.shift);
     }
     decipher(cipherText: string): string {
-        const mapperDecipher: Function = this.shiftDirection == "left" ? this.getFunctionRightShift() : this.getFunctionLeftShift();
-        return this.shiftFromMapper(cipherText, mapperDecipher, this.shift);
+        return this.shiftFromMapper(cipherText, this.mapperDecipher, this.shift);
     }
-    private getFunctionLeftShift() {
+    protected getMapper() {
+        this.mapperCipher = this.getFunctionLeftShift();
+        this.mapperDecipher = this.getFunctionRightShift();
+    }
+    protected getFunctionLeftShift() {
         return (symb: string, shift: number): string => {
             const actualShift: number = (LAST_SYMBOL - symb.charCodeAt(0) + shift) % RANGE;
             return String.fromCharCode(LAST_SYMBOL - actualShift);
         }
     }
-    private getFunctionRightShift() {
+    protected getFunctionRightShift() {
         return (symb: string, shift: number): string => {
             const actualShift: number =
                 (symb.charCodeAt(0) - FIRST_SYMBOL + shift) % RANGE;

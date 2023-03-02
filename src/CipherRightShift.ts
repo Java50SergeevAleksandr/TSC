@@ -3,6 +3,6 @@ export class CipherRightShift extends CipherImpl {
     //ciphering right shift ' ' + shift
     //deciphering left shift '~' - shift
     constructor(shift: number) {
-        super(shift, "right");
+        super(Math.abs(shift), "right");
     }
 }
